@@ -1,0 +1,2 @@
+academia_prompt1 = """Create information about the academic publications for a person that got trained as a {position} that started publishing in {grad_year} in CV style in bullet points. Don't add academic degrees and personal information!"""
+academia_prompt2 = """Write one or two sentences about the academic publications for a person that got trained as a {position} that started publishing in {grad_year}. Don't add academic degrees and personal information!"""

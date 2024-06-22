@@ -1,0 +1,2 @@
+hobbies_prompt1 = """Describe in one or two sentence the hobbies of a person that is a {position}, but have nothing to do with that position. The person for instance likes {hobby}. Add some hobbies. State everything as a fact and write from the first person perspective"""
+hobbies_prompt2 = """Write some bullet points about the hobbies of a person that is a {position}, but have nothing to do with that position. The person for instance likes {hobby}. Add some hobbies. State everything as a fact and write from the first person perspective"""
