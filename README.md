@@ -2,7 +2,7 @@
 This repo contains all relevant code for the creation of a so called *LLM Textmarker* which refers to
 the ability of an LLM to detect the start and end of different topics within a text.
 
-![Textmarker UI](assets/LLM_Textmarker_UI.png)
+![Textmarker UI](./assets/LLM_Textmarker_UI.png)
 
 ## Dataset
 The /data-folder contains all necessary files for the creation of the CV dataset.
