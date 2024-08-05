@@ -1,8 +1,8 @@
-# LLM Textmarker
-This repo contains all relevant code for the creation of a so called *LLM Textmarker* which refers to
+# LLM Highlighter
+This repo contains all relevant code for the creation of a so called *LLM Highlighter* which refers to
 the ability of an LLM to detect the start and end of different topics within a text.
 
-![Textmarker UI](/assets/LLM_Textmarker_UI.PNG)
+![Highlighter UI](/assets/LLM_Highlighter_UI.PNG)
 
 ## Dataset
 The /data-folder contains all necessary files for the creation of the CV dataset.
