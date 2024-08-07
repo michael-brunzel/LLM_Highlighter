@@ -1,2 +1,0 @@
-datasets[s3]==2.17.1
-argilla
