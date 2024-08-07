@@ -30,3 +30,9 @@ for deploying a custom Sagemaker endpoint (a custom model and a custom inference
 ## Gradio UI
 The /app folder contains the above displayed simple Gradio UI that display the core functionality
 of marking different topics in an unstructured text.
+
+### Environment variables
+This repo expects the following environment variables to be present for the different repo parts:
+* OPENAI_API_KEY - an OpenAI key is necessary for running the data generation process
+* HF_TOKEN - An access token for HuggingFace is necessary for accessing gated repos on HuggingFace for the model training + inference
+* ARGILLA_API_URL & ARGILLA_API_KEY - The address of the argilla workspace and an API key for it are used for the annotation & evaluation workflow
