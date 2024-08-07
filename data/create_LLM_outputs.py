@@ -22,24 +22,18 @@ def determine_start_and_end(topic_string: str, overall_string: str) -> tuple:
     matches_before = []
     idx = 0
     topic_words = re.findall(r"\w+", topic_string)
-    # topic_words = topic_string.split(" ")
 
     while True:
-        # matched_words = re.findall(edu_words[idx], complete_string)
-        # print(topic_words[idx])
-        # print("".join(topic_string.split(topic_words[idx])[1:]))
         start_sequence = topic_string[:-len(topic_string.split(topic_words[idx], 1)[1])]
-        # print(start_sequence)
         # check if there is already a match before the start of the section
         matches_before = re.findall(start_sequence, overall_string.split(topic_string)[0])
-        # print(matches_before)
         if len(matches_before) == 0:
             break
         idx += 1
 
     # Code for determining the end sequence
     # only check that end_sequence is unique within the passage (is sufficient)
-    end_idx = len(topic_words) -1
+    end_idx = len(topic_words) - 1
     while True:
         # The following code only makes sends if there is positive length match
         while len(topic_string.split(topic_words[end_idx])[-1]) == 0:

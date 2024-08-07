@@ -122,6 +122,7 @@ if __name__ == "__main__":
             logging_dir=f"{args.output_data_dir}/logs",
             optim="adamw_torch",
             evaluation_strategy="steps",
+            # report_to="mlflow",
             save_strategy="steps",
             eval_steps=20,
             save_steps=200,

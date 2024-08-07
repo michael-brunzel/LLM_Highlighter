@@ -1,4 +1,4 @@
-# App for displaying the marked texts that belong to the differen topics
+# App for displaying the marked texts that belong to the different topics
 
 import gradio as gr
 import requests
@@ -22,7 +22,7 @@ def predict(CV_text: str):
         timeout=10,
     )
     payload = resp.json()
-    output =  payload["body"]
+    output = payload["body"]
 
     output = re.sub("\'", "\"", output)
     output = output.replace("\\n", "")
@@ -51,8 +51,7 @@ def predict(CV_text: str):
         "entities": entities
     }
 
-# css=".input_text textarea {color: white;}"  # Change text color to red
-# css="#textbox_id span {color: white} #textbox_id div {color: white}"
+
 with gr.Blocks() as demo:
     with gr.Column():
         gr.Interface(

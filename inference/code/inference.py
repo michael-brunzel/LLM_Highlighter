@@ -11,6 +11,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, StoppingCriteria
 import torch
 
 from peft import AutoPeftModelForCausalLM
+from huggingface_hub import login
+import os
+login(token=os.environ.get("HF_TOKEN"))
 
 
 simple_json_schema = OrderedDict({
