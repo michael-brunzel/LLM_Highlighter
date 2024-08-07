@@ -9,7 +9,7 @@ The /data-folder contains all necessary files for the creation of the CV dataset
 The different sections of the CV are separately created and then combined together under particular constraints to ensure logical consistency of the content.
 The process is described in the following figure:
 
-![Data Generation UI](/assets/Data_Generation_Process.PNG)
+![Data Generation UI](/assets/Data_Generation_Process2.PNG)
 
 # Training
 The /training folder contains a notebook that prepares and starts the LLM Training within AWS Sagemaker.
