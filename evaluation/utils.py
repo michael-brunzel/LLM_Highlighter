@@ -7,10 +7,14 @@ import argilla as rg
 def determine_ner_entities(llm_output: str, cv_text: str) -> List[dict]:
     """
     Determine the actual text outputs and their string positions.
-    
+
     Args:
         llm_output (str): The raw output of the LLM or the actual label
         cv_text (str): The full CV
+
+    Returns:
+        (list): A list of dictionaries that reflect a sequence which belongs to one topic
+            and the associated position
     """
     new_dict = json.loads(re.sub("\'", "\"", llm_output))
     entities = []
@@ -30,14 +34,14 @@ def determine_ner_entities(llm_output: str, cv_text: str) -> List[dict]:
                 "end": overall_start+len(single_sequence), # end position in the whole string sequence
                 "score": 0,
             }]
-    
+
     return entities
 
 
 def find_all(a_str, sub):
     """
     This function finds all occurences of a sub-string within a string
-    
+
     Args:
         a_str (str): The complete string
         sub (str): the substring which should be found
@@ -49,11 +53,11 @@ def find_all(a_str, sub):
         yield start
         start += len(sub) # use start += 1 to find overlapping matches
 
-        
+
 def split_up_entities(topic_text: str, topic_start: int, topic: str) -> List[Tuple[str, int, int]]:
     """
     Compute the word locations for all words in the topic text
-    
+
     Args:
         topic_text (str): The text for a particular topic
         topic_start (int): The start index of the topic text within the whole CV
@@ -78,10 +82,20 @@ def split_up_entities(topic_text: str, topic_start: int, topic: str) -> List[Tup
     return collected_splits
 
 
-def compute_argilla_entities(preds, labels, texts, prediction_agent: str):
+def compute_argilla_entities(preds: list, labels: list, texts: list, prediction_agent: str) -> rg.DatasetForTokenClassification:
+    """
+    Create the argilla dataset by constucting the argilla dataformat (locations for all words)
+    for the predicted sequences.
+
+    Args:
+        preds (list): List of predictions from the model
+        labels (list): The labels for the output sequences
+        texts (list): The text strings
+        prediction_agent (str): The name of the model that created the predictions
+            (metadata for the annotations)
+    """
     records = []
     for idx in range(len(texts)):
-        print(idx)
         label_entities = determine_ner_entities(labels[idx], texts[idx])
         pred_entities = determine_ner_entities(preds[idx], texts[idx])
 
@@ -92,7 +106,7 @@ def compute_argilla_entities(preds, labels, texts, prediction_agent: str):
         pred_splits = []
         for ent in pred_entities:
             pred_splits += split_up_entities(ent["word"], ent["start"], ent["entity"])
-    
+
         # Argilla TokenClassificationRecord list
         records.append(
             rg.TokenClassificationRecord(
@@ -110,7 +124,7 @@ def compute_argilla_entities(preds, labels, texts, prediction_agent: str):
 def token2positions(text: str, annotations: List[Tuple[str, int, int]]) -> List[Tuple[str, int, int]]:
     """
     Compute the word locations for all words in the text and map the unallocated words (no category yet) as category 'none'
-    
+
     Args:
         text (str): The whole CV text
         annotations (list): A list of tuples where each tuple contains the category and the start and end position of a token
@@ -134,7 +148,7 @@ def token2positions(text: str, annotations: List[Tuple[str, int, int]]) -> List[
         filtered_annotations = [anno for anno in mod_annotations if anno[1] == new_start]
         if len(filtered_annotations) == 0:
             mod_annotations += [("none", new_start, new_end)]
-    
+
     # TODO: filter out categories which are ambiguous (same range for different categories...) --> for simplicity: filter out the first category...
     ranges = [tup[1:3] for tup in mod_annotations]
     unique_ranges = list(set(ranges))
@@ -150,10 +164,10 @@ def token2positions(text: str, annotations: List[Tuple[str, int, int]]) -> List[
     return mod_annotations
 
 
-def compute_sequences(dataset):
+def compute_sequences(dataset) -> tuple:
     """
     Compute the words for the label sequence and the prediction sequence respectively.
-    
+
     Args:
         dataset: A loaded argilla dataset
     """
@@ -170,7 +184,7 @@ def compute_sequences(dataset):
         labels, start, end = zip(*label_triples)
         # print(prediction_triples)
         predictions, start, end = zip(*prediction_triples)
-        
+
         overall_labels += [labels]
         overall_predictions += [predictions]
         overall_pred_triples += [prediction_triples]

@@ -7,6 +7,9 @@ the ability of an LLM to detect the start and end of different topics within a t
 ## Dataset
 The /data-folder contains all necessary files for the creation of the CV dataset.
 The different sections of the CV are separately created and then combined together under particular constraints to ensure logical consistency of the content.
+The process is described in the following figure:
+
+![Data Generation UI](/assets/Data_Generation_Process2.PNG)
 
 # Training
 The /training folder contains a notebook that prepares and starts the LLM Training within AWS Sagemaker.
@@ -27,3 +30,9 @@ for deploying a custom Sagemaker endpoint (a custom model and a custom inference
 ## Gradio UI
 The /app folder contains the above displayed simple Gradio UI that display the core functionality
 of marking different topics in an unstructured text.
+
+### Environment variables
+This repo expects the following environment variables to be present for the different repo parts:
+* OPENAI_API_KEY - an OpenAI key is necessary for running the data generation process
+* HF_TOKEN - An access token for HuggingFace is necessary for accessing gated repos on HuggingFace for the model training + inference
+* ARGILLA_API_URL & ARGILLA_API_KEY - The address of the argilla workspace and an API key for it are used for the annotation & evaluation workflow

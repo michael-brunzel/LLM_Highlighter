@@ -13,8 +13,9 @@ from peft import (
 )
 import os
 from dotenv import load_dotenv
-
 load_dotenv()
+from huggingface_hub import login
+login(token=os.environ.get("HF_TOKEN"))
 
 if __name__ == "__main__":
 
@@ -122,6 +123,7 @@ if __name__ == "__main__":
             logging_dir=f"{args.output_data_dir}/logs",
             optim="adamw_torch",
             evaluation_strategy="steps",
+            # report_to="mlflow",
             save_strategy="steps",
             eval_steps=20,
             save_steps=200,
